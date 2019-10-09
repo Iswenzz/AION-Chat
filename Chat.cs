@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Iswenzz.AION.Notifier
 {
@@ -106,15 +107,15 @@ namespace Iswenzz.AION.Notifier
             for (string line = FileStream.ReadLine(); line != null; line = FileStream.ReadLine())
             {
                 if (!string.IsNullOrEmpty(line))
-                    WriteParsedLine(line);
+                    ProcessLine(line);
             }
         }
 
         /// <summary>
-        /// Parse chat.log line to show in the right <see cref="ConsoleControl.ConsoleControl"/>.
+        /// Parse and edit chat.log line to show in the right <see cref="ConsoleControl.ConsoleControl"/>.
         /// </summary>
         /// <param name="line">Chat.log line.</param>
-        private void WriteParsedLine(string line)
+        private void ProcessLine(string line)
         {
             Color chatColor = Color.DarkGray;
             ConsoleControl.ConsoleControl chat = null;
@@ -131,14 +132,43 @@ namespace Iswenzz.AION.Notifier
                     chatColor = Color.FromArgb((int)(0.6275f * 255), (int)(1.0000f * 255), (int)(0.6275f * 255));
                     break;
             }
+            // Parse and write log date
+            ProcessDate(ref line, chat);
 
+            // Print edited line
+            Print(line + "\n", chatColor, chat);
+        }
+
+        /// <summary>
+        /// Print line to the main channel, (optional) and their own channel.
+        /// </summary>
+        /// <param name="line">Chat.log line.</param>
+        /// <param name="chatColor">Line foreground <see cref="Color"/>.</param>
+        /// <param name="chat">Print to this channel aswell.</param>
+        public void Print(string line, Color chatColor, ConsoleControl.ConsoleControl chat = null)
+        {
             // Write to the main channel
             if (Chats["All"].IsHandleCreated)
-                Chats["All"].Invoke((Action)(() => Chats["All"].WriteOutput(line + "\n", chatColor)));
+                Chats["All"].Invoke((Action)(() => Chats["All"].WriteOutput(line, chatColor)));
 
             // Write to the right channel
             if (chat != null && chat.IsHandleCreated)
-                chat.Invoke((Action)(() => chat.WriteOutput(line + "\n", chatColor)));
+                chat.Invoke((Action)(() => chat.WriteOutput(line, chatColor)));
+        }
+
+        /// <summary>
+        /// Parse the log date and print in gray color.
+        /// </summary>
+        /// <param name="line">Chat.log line.</param>
+        public void ProcessDate(ref string line, ConsoleControl.ConsoleControl chat)
+        {
+            Regex rgx_time = new Regex("([0-9:]{8})");
+            Regex rgx_remove_date = new Regex("(.*([0-9:]{8}).* : )");
+            string date = "(" + rgx_time.Match(line).Value + ") ";
+
+            // Remove date from parsed line
+            line = rgx_remove_date.Replace(line, "");
+            Print(date, Color.DimGray, chat);
         }
 
         /// <summary>
