@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Iswenzz.AION.Notifier
 {
@@ -22,6 +23,9 @@ namespace Iswenzz.AION.Notifier
         /// Dictionary containing all chats.
         /// </summary>
         public Dictionary<string, ConsoleControl.ConsoleControl> Chats { get; private set; }
+
+        private TriggerForm TriggerForm { get; set; }
+        private BanForm BanForm { get; set; }
 
         public string ChatLogPath { get; set; }
         public StreamReader FileStream { get; private set; }
@@ -39,8 +43,11 @@ namespace Iswenzz.AION.Notifier
         {
             InitializeComponent();
             ChatLogPath = @"D:\Program Files (x86)\GameforgeLive\Games\FRA_fra\AION\Download\Chat.log";
-            Resources = new ComponentResourceManager(typeof(Chat));
+            Resources = new ComponentResourceManager(typeof(Resources));
             Web = new HtmlWeb();
+            TriggerForm = new TriggerForm();
+            BanForm = new BanForm();
+
             Chats = new Dictionary<string, ConsoleControl.ConsoleControl>
             {
                 { "All", CreateChat() },
@@ -259,5 +266,75 @@ namespace Iswenzz.AION.Notifier
         private void ButtonAll_Click(object sender, EventArgs e) => ToggleChat(Chats["All"]);
         private void ButtonLFG_Click(object sender, EventArgs e) => ToggleChat(Chats["LFG"]);
         private void ButtonPM_Click(object sender, EventArgs e) => ToggleChat(Chats["PM"]);
+        private void TriggerButton_Click(object sender, EventArgs e) => TriggerForm.Show();
+        private void BanButton_Click(object sender, EventArgs e) => BanForm.Show();
+
+        private void Chat_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Save triggers
+            List<string> on = new List<string>();
+            List<string> off = new List<string>();
+            foreach (object item in TriggerForm.TriggerBox.Items)
+            {
+                if (!TriggerForm.TriggerBox.CheckedItems.Contains(item))
+                    off.Add((string)item);
+                else
+                    on.Add((string)item);
+            }
+            Properties.Settings.Default.TriggersOn = string.Join(",", on);
+            Properties.Settings.Default.TriggersOff = string.Join(",", off);
+
+            // Save bans
+            on.Clear();
+            off.Clear();
+            foreach (object item in BanForm.BanBox.Items)
+            {
+                if (!BanForm.BanBox.CheckedItems.Contains(item))
+                    off.Add((string)item);
+                else
+                    on.Add((string)item);
+            }
+            Properties.Settings.Default.BanOn = string.Join(",", on);
+            Properties.Settings.Default.BanOff = string.Join(",", off);
+
+            Properties.Settings.Default.Save();
+        }
+
+        private void Chat_Load(object sender, EventArgs e)
+        {
+            // Load triggers
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.TriggersOn))
+            {
+                string[] items = Properties.Settings.Default.TriggersOn.Split(',');
+                for (int i = 0; i < items.Length; i++)
+                {
+                    TriggerForm.TriggerBox.Items.Add(items[i]);
+                    TriggerForm.TriggerBox.SetItemChecked(i, true);
+                }
+            }
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.TriggersOff))
+            {
+                string[] items = Properties.Settings.Default.TriggersOff.Split(',');
+                for (int i = 0; i < items.Length; i++)
+                    TriggerForm.TriggerBox.Items.Add(items[i]);
+            }
+
+            // Load ban
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.BanOn))
+            {
+                string[] items = Properties.Settings.Default.BanOn.Split(',');
+                for (int i = 0; i < items.Length; i++)
+                {
+                    BanForm.BanBox.Items.Add(items[i]);
+                    BanForm.BanBox.SetItemChecked(i, true);
+                }
+            }
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.BanOff))
+            {
+                string[] items = Properties.Settings.Default.BanOff.Split(',');
+                for (int i = 0; i < items.Length; i++)
+                    BanForm.BanBox.Items.Add(items[i]);
+            }
+        }
     }
 }
