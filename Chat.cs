@@ -6,6 +6,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using HtmlAgilityPack;
+using System.Threading.Tasks;
 
 namespace Iswenzz.AION.Notifier
 {
@@ -26,6 +28,7 @@ namespace Iswenzz.AION.Notifier
         public FileSystemWatcher ChatLogWatcher { get; set; }
         private FileStream File { get; set; }
         private ConsoleControl.ConsoleControl SelectedChat { get; set; }
+        private HtmlWeb Web { get; set; }
 
         public bool HasSoundNotif { get; set; } = true;
 
@@ -37,14 +40,13 @@ namespace Iswenzz.AION.Notifier
             InitializeComponent();
             ChatLogPath = @"D:\Program Files (x86)\GameforgeLive\Games\FRA_fra\AION\Download\Chat.log";
             Resources = new ComponentResourceManager(typeof(Chat));
+            Web = new HtmlWeb();
             Chats = new Dictionary<string, ConsoleControl.ConsoleControl>
             {
                 { "All", CreateChat() },
                 { "LFG", CreateChat() },
                 { "PM", CreateChat() },
             };
-            ToggleChat(Chats["All"]);
-
             SyncChatLog();
         }
 
@@ -122,21 +124,69 @@ namespace Iswenzz.AION.Notifier
 
             switch (true)
             {
-                case true when line.Contains("1.0000 0.6941 0.6941]"):
+                case true when line.Contains("[3.LFG] [charname:"):
                     chat = Chats["LFG"];
                     chatColor = Color.FromArgb((int)(1.0000f * 255), (int)(0.6941f * 255), (int)(0.6941f * 255));
                     break;
 
-                case true when line.Contains("0.6275 1.0000 0.6275]"):
+                case true when line.Contains("Whispers:"):
+                case true when line.Contains("You Whisper to [charname:"):
                     chat = Chats["PM"];
                     chatColor = Color.FromArgb((int)(0.6275f * 255), (int)(1.0000f * 255), (int)(0.6275f * 255));
+                    break;
+
+                case true when line.Contains("You shout \""):
+                    chatColor = Color.Sienna;
                     break;
             }
             // Parse and write log date
             ProcessDate(ref line, chat);
 
+            // Parse and edit links
+            ProcessLinks(ref line, chat);
+
             // Print edited line
             Print(line + "\n", chatColor, chat);
+        }
+
+        /// <summary>
+        /// Parse links and put the right text.
+        /// </summary>
+        /// <param name="line">Chat.log line.</param>
+        public void ProcessLinks(ref string line, ConsoleControl.ConsoleControl chat)
+        {
+            Regex rgx_link = new Regex(@"(\[.*?:.*?])");
+            foreach (Match link in rgx_link.Matches(line))
+            {
+                if (!link.Success || link.Length <= 0 || string.IsNullOrEmpty(link.Value))
+                    continue;
+
+                string link_str = link.Value;
+                switch (true)
+                {
+                    case true when link_str.Contains("item:"):
+                        line = line.Remove(link.Index, link.Length);
+                        // Get item id from link
+                        string item_id = link_str.Split(':')[1];
+                        if (item_id.Contains(";"))
+                            item_id = item_id.Substring(0, item_id.IndexOf(';'));
+                        // Get item name from aioncodex title
+                        HtmlAgilityPack.HtmlDocument doc = Web.Load($"https://aioncodex.com/en/item/{item_id}");
+                        link_str = "<" + doc.DocumentNode.SelectSingleNode("html/head/title")
+                            .InnerText.Replace(" - Aion Codex", "") + ">";
+                        break;
+
+                    case true when link_str.Contains("charname:"):
+                        line = line.Remove(link.Index, link.Length);
+                        // Get char name from link
+                        string char_name = link_str.Split(':')[1];
+                        if (char_name.Contains(";"))
+                            char_name = char_name.Substring(0, char_name.IndexOf(';'));
+                        link_str = char_name;
+                        break;
+                }
+                line = line.Insert(link.Index, link_str);
+            }
         }
 
         /// <summary>
@@ -162,8 +212,8 @@ namespace Iswenzz.AION.Notifier
         /// <param name="line">Chat.log line.</param>
         public void ProcessDate(ref string line, ConsoleControl.ConsoleControl chat)
         {
-            Regex rgx_time = new Regex("([0-9:]{8})");
-            Regex rgx_remove_date = new Regex("(.*([0-9:]{8}).* : )");
+            Regex rgx_time = new Regex(@"([0-9:]{8})");
+            Regex rgx_remove_date = new Regex(@"(.*([0-9:]{8}).* : )");
             string date = "(" + rgx_time.Match(line).Value + ") ";
 
             // Remove date from parsed line
