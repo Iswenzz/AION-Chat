@@ -5,10 +5,10 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace Iswenzz.AION.Notifier
 {
@@ -154,6 +154,49 @@ namespace Iswenzz.AION.Notifier
 
             // Print edited line
             Print(line + "\n", chatColor, chat);
+
+            // Notify
+            Task.Factory.StartNew(() => CheckNotify(line));
+        }
+
+        /// <summary>
+        /// Check if the line is in the trigger list.
+        /// </summary>
+        /// <param name="line">Chat.log line.</param>
+        private async Task CheckNotify(string line)
+        {
+            if (string.IsNullOrEmpty(line))
+                return;
+
+            if (TriggerForm.TriggerBox.Items.Cast<string>().Any(item => line.Contains(item))
+                && !BanForm.BanBox.Items.Cast<string>().Any(item => line.Contains(item)))
+            {
+                using (NotifyIcon notifyIcon = new NotifyIcon { Visible = true, Icon = SystemIcons.Application })
+                {
+                    string trigMessage = TriggerForm.TriggerBox.Items.Cast<string>()
+                        .FirstOrDefault(item => line.Contains(item));
+
+                    notifyIcon.BalloonTipTitle = $"AION Chat Notification. [{trigMessage}]";
+                    notifyIcon.BalloonTipText = line;
+
+                    notifyIcon.ShowBalloonTip(20 * 1000);
+
+                    if (HasSoundNotif)
+                        await NotifySoundLoop();
+                }
+            }
+        }
+
+        private async Task NotifySoundLoop()
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                if (!HasSoundNotif)
+                    break;
+
+                System.Media.SystemSounds.Beep.Play();
+                await Task.Delay(1000);
+            }
         }
 
         /// <summary>
@@ -172,6 +215,9 @@ namespace Iswenzz.AION.Notifier
                 switch (true)
                 {
                     case true when link_str.Contains("item:"):
+                        Console.WriteLine(line);
+                        Console.WriteLine(link.Index);
+                        Console.WriteLine(link.Length);
                         line = line.Remove(link.Index, link.Length);
                         // Get item id from link
                         string item_id = link_str.Split(':')[1];
