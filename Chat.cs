@@ -206,39 +206,42 @@ namespace Iswenzz.AION.Notifier
         public void ProcessLinks(ref string line, ConsoleControl.ConsoleControl chat)
         {
             Regex rgx_link = new Regex(@"(\[.*?:.*?])");
-            foreach (Match link in rgx_link.Matches(line))
+            Match link = rgx_link.Match(line);
+            while (link != null && link.Success)
             {
-                if (!link.Success || link.Length <= 0 || string.IsNullOrEmpty(link.Value))
-                    continue;
-
                 string link_str = link.Value;
                 switch (true)
                 {
                     case true when link_str.Contains("item:"):
-                        Console.WriteLine(line);
-                        Console.WriteLine(link.Index);
-                        Console.WriteLine(link.Length);
                         line = line.Remove(link.Index, link.Length);
+
                         // Get item id from link
                         string item_id = link_str.Split(':')[1];
                         if (item_id.Contains(";"))
                             item_id = item_id.Substring(0, item_id.IndexOf(';'));
+
                         // Get item name from aioncodex title
                         HtmlAgilityPack.HtmlDocument doc = Web.Load($"https://aioncodex.com/en/item/{item_id}");
                         link_str = "<" + doc.DocumentNode.SelectSingleNode("html/head/title")
                             .InnerText.Replace(" - Aion Codex", "") + ">";
-                        break;
+                        line = line.Insert(link.Index, link_str);
+                        link = rgx_link.Match(line);
+                        continue;
 
                     case true when link_str.Contains("charname:"):
                         line = line.Remove(link.Index, link.Length);
+
                         // Get char name from link
                         string char_name = link_str.Split(':')[1];
                         if (char_name.Contains(";"))
                             char_name = char_name.Substring(0, char_name.IndexOf(';'));
+
                         link_str = char_name;
-                        break;
+                        line = line.Insert(link.Index, link_str);
+                        link = rgx_link.Match(line);
+                        continue;
                 }
-                line = line.Insert(link.Index, link_str);
+                link = null;
             }
         }
 

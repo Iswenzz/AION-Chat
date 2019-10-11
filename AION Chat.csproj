@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CC0941FA-D2A8-4925-8118-08920E158EE9}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Iswenzz.AION</RootNamespace>
     <AssemblyName>AION Chat</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
