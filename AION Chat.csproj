@@ -72,6 +72,9 @@
   <PropertyGroup>
     <ApplicationIcon>chat.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ConsoleControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=7edd23586f5e297f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

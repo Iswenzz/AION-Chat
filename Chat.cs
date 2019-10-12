@@ -32,10 +32,12 @@ namespace Iswenzz.AION.Notifier
         public FileSystemWatcher ChatLogWatcher { get; set; }
         private FileStream FS { get; set; }
         private ConsoleControl.ConsoleControl SelectedChat { get; set; }
+        private NotifyIcon NotifyIcon { get; set; }
         private HtmlWeb Web { get; set; }
 
         public bool HasSoundNotif { get; set; } = true;
         private bool IsSoundPlaying { get; set; }
+        private bool ForceSoundStop { get; set; }
 
         /// <summary>
         /// Initialize a new <see cref="Chat"/> instance.
@@ -55,6 +57,15 @@ namespace Iswenzz.AION.Notifier
                 { "PM", CreateChat() },
             };
             SelectedChat = Chats["All"];
+
+            NotifyIcon = new NotifyIcon
+            {
+                Visible = true,
+                Icon = Icon,
+                Text = Text
+            };
+            NotifyIcon.BalloonTipClicked += NotifyIcon_BalloonTipClicked;
+            NotifyIcon.Visible = false;
         }
 
         /// <summary>
@@ -160,10 +171,21 @@ namespace Iswenzz.AION.Notifier
             ProcessDate(ref line, chat);
             // Parse and edit links
             ProcessLinks(ref line, chat);
+            // Fix broken chars
+            FixLineChars(ref line);
             // Print edited line
             Print(line + "\n", chatColor, chat);
             // Notify
             Task.Factory.StartNew(() => CheckNotify(line));
+        }
+
+        /// <summary>
+        /// Fix broken parsed chars.
+        /// </summary>
+        /// <param name="line">Chat.log line.</param>
+        private void FixLineChars(ref string line)
+        {
+            line = line.Replace("&#39;", "'");
         }
 
         /// <summary>
@@ -178,20 +200,26 @@ namespace Iswenzz.AION.Notifier
             if (TriggerForm.TriggerBox.Items.Cast<ListViewItem>().Where(b => b.Checked).Any(b => line.Contains(b.Text))
                 && !BanForm.BanBox.Items.Cast<ListViewItem>().Where(b => b.Checked).Any(b => line.Contains(b.Text)))
             {
-                using (NotifyIcon notifyIcon = new NotifyIcon { Visible = true, Icon = SystemIcons.Application })
-                {
-                    string trigMessage = TriggerForm.TriggerBox.Items.Cast<ListViewItem>()
-                        .Where(b => b.Checked).FirstOrDefault(b => line.Contains(b.Text)).Text;
+                string trigMessage = TriggerForm.TriggerBox.Items.Cast<ListViewItem>()
+                    .Where(b => b.Checked).FirstOrDefault(b => line.Contains(b.Text)).Text;
 
-                    notifyIcon.BalloonTipTitle = $"AION Chat Notification [{trigMessage}]";
-                    notifyIcon.BalloonTipText = line;
+                NotifyIcon.Visible = true;
+                NotifyIcon.BalloonTipTitle = $"AION Chat Notification [{trigMessage}]";
+                NotifyIcon.BalloonTipText = line;
+                NotifyIcon.ShowBalloonTip(20 * 1000);
 
-                    notifyIcon.ShowBalloonTip(20 * 1000);
-
-                    if (HasSoundNotif)
-                        await NotifySoundLoop();
-                }
+                if (HasSoundNotif)
+                    await NotifySoundLoop();
             }
+        }
+
+        /// <summary>
+        /// Callback when system tray balloon tip is clicked: Stop the notify sound.
+        /// </summary>
+        private void NotifyIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            ForceSoundStop = true;
+            NotifyIcon.Visible = false;
         }
 
         /// <summary>
@@ -199,7 +227,7 @@ namespace Iswenzz.AION.Notifier
         /// </summary>
         private async Task NotifySoundLoop()
         {
-            if (IsSoundPlaying)
+            if (IsSoundPlaying || !HasSoundNotif)
                 return;
 
             IsSoundPlaying = true;
@@ -207,6 +235,11 @@ namespace Iswenzz.AION.Notifier
             {
                 if (!HasSoundNotif)
                     break;
+                if (ForceSoundStop)
+                {
+                    ForceSoundStop = false;
+                    break;
+                }
 
                 System.Media.SystemSounds.Beep.Play();
                 await Task.Delay(1000);
@@ -323,6 +356,8 @@ namespace Iswenzz.AION.Notifier
             Reader = null;
             FS?.Dispose();
             FS = null;
+            NotifyIcon?.Dispose();
+            NotifyIcon = null;
 
             base.Dispose();
         }
