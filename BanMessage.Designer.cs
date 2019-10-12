@@ -29,30 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BanForm));
-            this.BanBox = new System.Windows.Forms.CheckedListBox();
             this.AddButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.RemoveButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.TextBox = new System.Windows.Forms.TextBox();
+            this.BanBox = new System.Windows.Forms.ListView();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // BanBox
-            // 
-            this.BanBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.BanBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.BanBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BanBox.Font = new System.Drawing.Font("Corbel", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BanBox.ForeColor = System.Drawing.Color.Gainsboro;
-            this.BanBox.FormattingEnabled = true;
-            this.BanBox.Location = new System.Drawing.Point(0, 0);
-            this.BanBox.Name = "BanBox";
-            this.BanBox.Size = new System.Drawing.Size(506, 402);
-            this.BanBox.TabIndex = 0;
             // 
             // AddButton
             // 
@@ -143,6 +130,24 @@
             this.TextBox.Name = "TextBox";
             this.TextBox.Size = new System.Drawing.Size(347, 22);
             this.TextBox.TabIndex = 4;
+            this.TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress);
+            // 
+            // BanBox
+            // 
+            this.BanBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.BanBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.BanBox.CheckBoxes = true;
+            this.BanBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BanBox.Font = new System.Drawing.Font("Corbel", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BanBox.ForeColor = System.Drawing.Color.Gainsboro;
+            this.BanBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.BanBox.Location = new System.Drawing.Point(0, 0);
+            this.BanBox.Name = "BanBox";
+            this.BanBox.Size = new System.Drawing.Size(506, 402);
+            this.BanBox.TabIndex = 8;
+            this.BanBox.UseCompatibleStateImageBehavior = false;
+            this.BanBox.View = System.Windows.Forms.View.List;
+            this.BanBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BanBox_KeyUp);
             // 
             // BanForm
             // 
@@ -166,12 +171,12 @@
         }
 
         #endregion
-        public System.Windows.Forms.CheckedListBox BanBox;
         private UI.Controls.Buttons.FlatButton AddButton;
         private System.Windows.Forms.Panel panel2;
         private UI.Controls.Buttons.FlatButton RemoveButton;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TextBox TextBox;
         private System.Windows.Forms.Panel panel4;
+        public System.Windows.Forms.ListView BanBox;
     }
 }

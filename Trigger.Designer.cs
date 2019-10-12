@@ -29,30 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TriggerForm));
-            this.TriggerBox = new System.Windows.Forms.CheckedListBox();
             this.AddButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.RemoveButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.TextBox = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.TextBox = new System.Windows.Forms.TextBox();
+            this.TriggerBox = new System.Windows.Forms.ListView();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // TriggerBox
-            // 
-            this.TriggerBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.TriggerBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TriggerBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TriggerBox.Font = new System.Drawing.Font("Corbel", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TriggerBox.ForeColor = System.Drawing.Color.Gainsboro;
-            this.TriggerBox.FormattingEnabled = true;
-            this.TriggerBox.Location = new System.Drawing.Point(0, 0);
-            this.TriggerBox.Name = "TriggerBox";
-            this.TriggerBox.Size = new System.Drawing.Size(506, 402);
-            this.TriggerBox.TabIndex = 0;
             // 
             // AddButton
             // 
@@ -125,6 +112,15 @@
             this.panel3.Size = new System.Drawing.Size(506, 39);
             this.panel3.TabIndex = 5;
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.TextBox);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 9);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(347, 30);
+            this.panel4.TabIndex = 4;
+            // 
             // TextBox
             // 
             this.TextBox.BackColor = System.Drawing.Color.LightGray;
@@ -134,15 +130,24 @@
             this.TextBox.Name = "TextBox";
             this.TextBox.Size = new System.Drawing.Size(347, 22);
             this.TextBox.TabIndex = 4;
+            this.TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress);
             // 
-            // panel4
+            // TriggerBox
             // 
-            this.panel4.Controls.Add(this.TextBox);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 9);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(347, 30);
-            this.panel4.TabIndex = 4;
+            this.TriggerBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.TriggerBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TriggerBox.CheckBoxes = true;
+            this.TriggerBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TriggerBox.Font = new System.Drawing.Font("Corbel", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TriggerBox.ForeColor = System.Drawing.Color.Gainsboro;
+            this.TriggerBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.TriggerBox.Location = new System.Drawing.Point(0, 0);
+            this.TriggerBox.Name = "TriggerBox";
+            this.TriggerBox.Size = new System.Drawing.Size(506, 402);
+            this.TriggerBox.TabIndex = 8;
+            this.TriggerBox.UseCompatibleStateImageBehavior = false;
+            this.TriggerBox.View = System.Windows.Forms.View.List;
+            this.TriggerBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TriggerBox_KeyUp);
             // 
             // TriggerForm
             // 
@@ -166,12 +171,12 @@
         }
 
         #endregion
-        public System.Windows.Forms.CheckedListBox TriggerBox;
         private UI.Controls.Buttons.FlatButton AddButton;
         private System.Windows.Forms.Panel panel2;
         private UI.Controls.Buttons.FlatButton RemoveButton;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TextBox TextBox;
         private System.Windows.Forms.Panel panel4;
+        public System.Windows.Forms.ListView TriggerBox;
     }
 }

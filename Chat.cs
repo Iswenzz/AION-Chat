@@ -35,6 +35,7 @@ namespace Iswenzz.AION.Notifier
         private HtmlWeb Web { get; set; }
 
         public bool HasSoundNotif { get; set; } = true;
+        private bool IsSoundPlaying { get; set; }
 
         /// <summary>
         /// Initialize a new <see cref="Chat"/> instance.
@@ -148,13 +149,10 @@ namespace Iswenzz.AION.Notifier
             }
             // Parse and write log date
             ProcessDate(ref line, chat);
-
             // Parse and edit links
             ProcessLinks(ref line, chat);
-
             // Print edited line
             Print(line + "\n", chatColor, chat);
-
             // Notify
             Task.Factory.StartNew(() => CheckNotify(line));
         }
@@ -168,15 +166,15 @@ namespace Iswenzz.AION.Notifier
             if (string.IsNullOrEmpty(line))
                 return;
 
-            if (TriggerForm.TriggerBox.Items.Cast<string>().Any(item => line.Contains(item))
-                && !BanForm.BanBox.Items.Cast<string>().Any(item => line.Contains(item)))
+            if (TriggerForm.TriggerBox.Items.Cast<ListViewItem>().Where(b => b.Checked).Any(b => line.Contains(b.Text))
+                && !BanForm.BanBox.Items.Cast<ListViewItem>().Where(b => b.Checked).Any(b => line.Contains(b.Text)))
             {
                 using (NotifyIcon notifyIcon = new NotifyIcon { Visible = true, Icon = SystemIcons.Application })
                 {
-                    string trigMessage = TriggerForm.TriggerBox.Items.Cast<string>()
-                        .FirstOrDefault(item => line.Contains(item));
+                    string trigMessage = TriggerForm.TriggerBox.Items.Cast<ListViewItem>()
+                        .Where(b => b.Checked).FirstOrDefault(b => line.Contains(b.Text)).Text;
 
-                    notifyIcon.BalloonTipTitle = $"AION Chat Notification. [{trigMessage}]";
+                    notifyIcon.BalloonTipTitle = $"AION Chat Notification [{trigMessage}]";
                     notifyIcon.BalloonTipText = line;
 
                     notifyIcon.ShowBalloonTip(20 * 1000);
@@ -189,6 +187,10 @@ namespace Iswenzz.AION.Notifier
 
         private async Task NotifySoundLoop()
         {
+            if (IsSoundPlaying)
+                return;
+
+            IsSoundPlaying = true;
             for (int i = 0; i < 30; i++)
             {
                 if (!HasSoundNotif)
@@ -197,6 +199,7 @@ namespace Iswenzz.AION.Notifier
                 System.Media.SystemSounds.Beep.Play();
                 await Task.Delay(1000);
             }
+            IsSoundPlaying = false;
         }
 
         /// <summary>
@@ -222,8 +225,9 @@ namespace Iswenzz.AION.Notifier
 
                         // Get item name from aioncodex title
                         HtmlAgilityPack.HtmlDocument doc = Web.Load($"https://aioncodex.com/en/item/{item_id}");
-                        link_str = "<" + doc.DocumentNode.SelectSingleNode("html/head/title")
-                            .InnerText.Replace(" - Aion Codex", "") + ">";
+                        string item_name = doc.DocumentNode.SelectSingleNode("html/head/title")
+                            .InnerText.Replace(" - Aion Codex", "") ?? $"item:{item_id}";
+                        link_str = "<" + item_name + ">";
                         line = line.Insert(link.Index, link_str);
                         link = rgx_link.Match(line);
                         continue;
@@ -246,6 +250,20 @@ namespace Iswenzz.AION.Notifier
         }
 
         /// <summary>
+        /// Parse the log date and print in gray color.
+        /// </summary>
+        /// <param name="line">Chat.log line.</param>
+        public void ProcessDate(ref string line, ConsoleControl.ConsoleControl chat)
+        {
+            Regex rgx_time = new Regex(@"([0-9:]{8})");
+            Regex rgx_remove_date = new Regex(@"(.*([0-9:]{8}).* : )");
+            string date = "(" + rgx_time.Match(line).Value + ") ";
+
+            // Edit date format
+            line = rgx_remove_date.Replace(line, date);
+        }
+
+        /// <summary>
         /// Print line to the main channel, (optional) and their own channel.
         /// </summary>
         /// <param name="line">Chat.log line.</param>
@@ -260,21 +278,6 @@ namespace Iswenzz.AION.Notifier
             // Write to the right channel
             if (chat != null && chat.IsHandleCreated)
                 chat.Invoke((Action)(() => chat.WriteOutput(line, chatColor)));
-        }
-
-        /// <summary>
-        /// Parse the log date and print in gray color.
-        /// </summary>
-        /// <param name="line">Chat.log line.</param>
-        public void ProcessDate(ref string line, ConsoleControl.ConsoleControl chat)
-        {
-            Regex rgx_time = new Regex(@"([0-9:]{8})");
-            Regex rgx_remove_date = new Regex(@"(.*([0-9:]{8}).* : )");
-            string date = "(" + rgx_time.Match(line).Value + ") ";
-
-            // Remove date from parsed line
-            line = rgx_remove_date.Replace(line, "");
-            Print(date, Color.DimGray, chat);
         }
 
         /// <summary>
@@ -321,30 +324,16 @@ namespace Iswenzz.AION.Notifier
         private void Chat_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save triggers
-            List<string> on = new List<string>();
-            List<string> off = new List<string>();
-            foreach (object item in TriggerForm.TriggerBox.Items)
-            {
-                if (!TriggerForm.TriggerBox.CheckedItems.Contains(item))
-                    off.Add((string)item);
-                else
-                    on.Add((string)item);
-            }
-            Properties.Settings.Default.TriggersOn = string.Join(",", on);
-            Properties.Settings.Default.TriggersOff = string.Join(",", off);
+            Properties.Settings.Default.TriggersOn = string.Join(",", TriggerForm.TriggerBox.Items
+                .Cast<ListViewItem>().Where(b => b.Checked).Select(b => b.Text));
+            Properties.Settings.Default.TriggersOff = string.Join(",", TriggerForm.TriggerBox.Items
+                .Cast<ListViewItem>().Where(b => !b.Checked).Select(b => b.Text));
 
             // Save bans
-            on.Clear();
-            off.Clear();
-            foreach (object item in BanForm.BanBox.Items)
-            {
-                if (!BanForm.BanBox.CheckedItems.Contains(item))
-                    off.Add((string)item);
-                else
-                    on.Add((string)item);
-            }
-            Properties.Settings.Default.BanOn = string.Join(",", on);
-            Properties.Settings.Default.BanOff = string.Join(",", off);
+            Properties.Settings.Default.BanOn = string.Join(",", BanForm.BanBox.Items
+                .Cast<ListViewItem>().Where(b => b.Checked).Select(b => b.Text));
+            Properties.Settings.Default.BanOff = string.Join(",", BanForm.BanBox.Items
+                .Cast<ListViewItem>().Where(b => !b.Checked).Select(b => b.Text));
 
             Properties.Settings.Default.Save();
         }
@@ -353,37 +342,19 @@ namespace Iswenzz.AION.Notifier
         {
             // Load triggers
             if (!string.IsNullOrEmpty(Properties.Settings.Default.TriggersOn))
-            {
-                string[] items = Properties.Settings.Default.TriggersOn.Split(',');
-                for (int i = 0; i < items.Length; i++)
-                {
-                    TriggerForm.TriggerBox.Items.Add(items[i]);
-                    TriggerForm.TriggerBox.SetItemChecked(i, true);
-                }
-            }
+                Properties.Settings.Default.TriggersOn.Split(',').ToList()
+                    .ForEach(item => TriggerForm.TriggerBox.Items.Add(new ListViewItem(item) { Checked = true }));
             if (!string.IsNullOrEmpty(Properties.Settings.Default.TriggersOff))
-            {
-                string[] items = Properties.Settings.Default.TriggersOff.Split(',');
-                for (int i = 0; i < items.Length; i++)
-                    TriggerForm.TriggerBox.Items.Add(items[i]);
-            }
+                Properties.Settings.Default.TriggersOff.Split(',').ToList()
+                    .ForEach(item => TriggerForm.TriggerBox.Items.Add(new ListViewItem(item) { Checked = false }));
 
             // Load ban
             if (!string.IsNullOrEmpty(Properties.Settings.Default.BanOn))
-            {
-                string[] items = Properties.Settings.Default.BanOn.Split(',');
-                for (int i = 0; i < items.Length; i++)
-                {
-                    BanForm.BanBox.Items.Add(items[i]);
-                    BanForm.BanBox.SetItemChecked(i, true);
-                }
-            }
+                Properties.Settings.Default.BanOn.Split(',').ToList()
+                    .ForEach(item => BanForm.BanBox.Items.Add(new ListViewItem(item) { Checked = true }));
             if (!string.IsNullOrEmpty(Properties.Settings.Default.BanOff))
-            {
-                string[] items = Properties.Settings.Default.BanOff.Split(',');
-                for (int i = 0; i < items.Length; i++)
-                    BanForm.BanBox.Items.Add(items[i]);
-            }
+                Properties.Settings.Default.BanOff.Split(',').ToList()
+                    .ForEach(item => BanForm.BanBox.Items.Add(new ListViewItem(item) { Checked = false }));
         }
     }
 }
