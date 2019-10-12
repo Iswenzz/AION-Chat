@@ -30,15 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Chat));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.TriggerButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
+            this.BanButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
+            this.MuteButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
+            this.ClearButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.ButtonPM = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.ButtonLFG = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.ButtonAll = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.ChatPanel = new System.Windows.Forms.Panel();
-            this.TriggerButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
-            this.BanButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
-            this.MuteButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
-            this.ClearButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -46,6 +47,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.TriggerButton);
             this.panel1.Controls.Add(this.BanButton);
             this.panel1.Controls.Add(this.MuteButton);
@@ -55,107 +57,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 42);
             this.panel1.TabIndex = 0;
-            // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.ButtonPM);
-            this.panel2.Controls.Add(this.ButtonLFG);
-            this.panel2.Controls.Add(this.ButtonAll);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 42);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(800, 24);
-            this.panel2.TabIndex = 1;
-            // 
-            // ButtonPM
-            // 
-            this.ButtonPM.Angles = 0;
-            this.ButtonPM.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ButtonPM.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ButtonPM.FlatAppearance.BorderSize = 0;
-            this.ButtonPM.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.ButtonPM.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.ButtonPM.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonPM.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ButtonPM.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.ButtonPM.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.ButtonPM.HoverColorLeave = System.Drawing.Color.Empty;
-            this.ButtonPM.HoverColorText = System.Drawing.Color.DarkOrange;
-            this.ButtonPM.HoverColorTextLeave = System.Drawing.Color.Empty;
-            this.ButtonPM.Icon = null;
-            this.ButtonPM.IconAutoPlacement = false;
-            this.ButtonPM.IconSize = 0;
-            this.ButtonPM.Location = new System.Drawing.Point(250, 0);
-            this.ButtonPM.Name = "ButtonPM";
-            this.ButtonPM.RoundedCorner = 0;
-            this.ButtonPM.Size = new System.Drawing.Size(125, 22);
-            this.ButtonPM.TabIndex = 2;
-            this.ButtonPM.Text = "PM";
-            this.ButtonPM.UseVisualStyleBackColor = false;
-            this.ButtonPM.Click += new System.EventHandler(this.ButtonPM_Click);
-            // 
-            // ButtonLFG
-            // 
-            this.ButtonLFG.Angles = 0;
-            this.ButtonLFG.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ButtonLFG.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ButtonLFG.FlatAppearance.BorderSize = 0;
-            this.ButtonLFG.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.ButtonLFG.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.ButtonLFG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonLFG.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ButtonLFG.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.ButtonLFG.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.ButtonLFG.HoverColorLeave = System.Drawing.Color.Empty;
-            this.ButtonLFG.HoverColorText = System.Drawing.Color.DarkOrange;
-            this.ButtonLFG.HoverColorTextLeave = System.Drawing.Color.Empty;
-            this.ButtonLFG.Icon = null;
-            this.ButtonLFG.IconAutoPlacement = false;
-            this.ButtonLFG.IconSize = 0;
-            this.ButtonLFG.Location = new System.Drawing.Point(125, 0);
-            this.ButtonLFG.Name = "ButtonLFG";
-            this.ButtonLFG.RoundedCorner = 0;
-            this.ButtonLFG.Size = new System.Drawing.Size(125, 22);
-            this.ButtonLFG.TabIndex = 1;
-            this.ButtonLFG.Text = "LFG";
-            this.ButtonLFG.UseVisualStyleBackColor = false;
-            this.ButtonLFG.Click += new System.EventHandler(this.ButtonLFG_Click);
-            // 
-            // ButtonAll
-            // 
-            this.ButtonAll.Angles = 0;
-            this.ButtonAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ButtonAll.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ButtonAll.FlatAppearance.BorderSize = 0;
-            this.ButtonAll.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.ButtonAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.ButtonAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonAll.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ButtonAll.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.ButtonAll.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.ButtonAll.HoverColorLeave = System.Drawing.Color.Empty;
-            this.ButtonAll.HoverColorText = System.Drawing.Color.DarkOrange;
-            this.ButtonAll.HoverColorTextLeave = System.Drawing.Color.Empty;
-            this.ButtonAll.Icon = null;
-            this.ButtonAll.IconAutoPlacement = false;
-            this.ButtonAll.IconSize = 0;
-            this.ButtonAll.Location = new System.Drawing.Point(0, 0);
-            this.ButtonAll.Name = "ButtonAll";
-            this.ButtonAll.RoundedCorner = 0;
-            this.ButtonAll.Size = new System.Drawing.Size(125, 22);
-            this.ButtonAll.TabIndex = 0;
-            this.ButtonAll.Text = "All";
-            this.ButtonAll.UseVisualStyleBackColor = false;
-            this.ButtonAll.Click += new System.EventHandler(this.ButtonAll_Click);
-            // 
-            // ChatPanel
-            // 
-            this.ChatPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ChatPanel.Location = new System.Drawing.Point(0, 66);
-            this.ChatPanel.Name = "ChatPanel";
-            this.ChatPanel.Size = new System.Drawing.Size(800, 384);
-            this.ChatPanel.TabIndex = 2;
             // 
             // TriggerButton
             // 
@@ -265,6 +166,118 @@
             this.ClearButton.UseVisualStyleBackColor = false;
             this.ClearButton.Click += new System.EventHandler(this.CleanButton_Click);
             // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.ButtonPM);
+            this.panel2.Controls.Add(this.ButtonLFG);
+            this.panel2.Controls.Add(this.ButtonAll);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 42);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(800, 24);
+            this.panel2.TabIndex = 1;
+            // 
+            // ButtonPM
+            // 
+            this.ButtonPM.Angles = 0;
+            this.ButtonPM.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.ButtonPM.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ButtonPM.FlatAppearance.BorderSize = 0;
+            this.ButtonPM.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ButtonPM.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.ButtonPM.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonPM.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonPM.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.ButtonPM.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.ButtonPM.HoverColorLeave = System.Drawing.Color.Empty;
+            this.ButtonPM.HoverColorText = System.Drawing.Color.DarkOrange;
+            this.ButtonPM.HoverColorTextLeave = System.Drawing.Color.Empty;
+            this.ButtonPM.Icon = null;
+            this.ButtonPM.IconAutoPlacement = false;
+            this.ButtonPM.IconSize = 0;
+            this.ButtonPM.Location = new System.Drawing.Point(250, 0);
+            this.ButtonPM.Name = "ButtonPM";
+            this.ButtonPM.RoundedCorner = 0;
+            this.ButtonPM.Size = new System.Drawing.Size(125, 22);
+            this.ButtonPM.TabIndex = 2;
+            this.ButtonPM.Text = "PM";
+            this.ButtonPM.UseVisualStyleBackColor = false;
+            this.ButtonPM.Click += new System.EventHandler(this.ButtonPM_Click);
+            // 
+            // ButtonLFG
+            // 
+            this.ButtonLFG.Angles = 0;
+            this.ButtonLFG.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.ButtonLFG.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ButtonLFG.FlatAppearance.BorderSize = 0;
+            this.ButtonLFG.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ButtonLFG.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.ButtonLFG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonLFG.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonLFG.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.ButtonLFG.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.ButtonLFG.HoverColorLeave = System.Drawing.Color.Empty;
+            this.ButtonLFG.HoverColorText = System.Drawing.Color.DarkOrange;
+            this.ButtonLFG.HoverColorTextLeave = System.Drawing.Color.Empty;
+            this.ButtonLFG.Icon = null;
+            this.ButtonLFG.IconAutoPlacement = false;
+            this.ButtonLFG.IconSize = 0;
+            this.ButtonLFG.Location = new System.Drawing.Point(125, 0);
+            this.ButtonLFG.Name = "ButtonLFG";
+            this.ButtonLFG.RoundedCorner = 0;
+            this.ButtonLFG.Size = new System.Drawing.Size(125, 22);
+            this.ButtonLFG.TabIndex = 1;
+            this.ButtonLFG.Text = "LFG";
+            this.ButtonLFG.UseVisualStyleBackColor = false;
+            this.ButtonLFG.Click += new System.EventHandler(this.ButtonLFG_Click);
+            // 
+            // ButtonAll
+            // 
+            this.ButtonAll.Angles = 0;
+            this.ButtonAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.ButtonAll.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ButtonAll.FlatAppearance.BorderSize = 0;
+            this.ButtonAll.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.ButtonAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.ButtonAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonAll.Font = new System.Drawing.Font("Corbel", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonAll.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.ButtonAll.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.ButtonAll.HoverColorLeave = System.Drawing.Color.Empty;
+            this.ButtonAll.HoverColorText = System.Drawing.Color.DarkOrange;
+            this.ButtonAll.HoverColorTextLeave = System.Drawing.Color.Empty;
+            this.ButtonAll.Icon = null;
+            this.ButtonAll.IconAutoPlacement = false;
+            this.ButtonAll.IconSize = 0;
+            this.ButtonAll.Location = new System.Drawing.Point(0, 0);
+            this.ButtonAll.Name = "ButtonAll";
+            this.ButtonAll.RoundedCorner = 0;
+            this.ButtonAll.Size = new System.Drawing.Size(125, 22);
+            this.ButtonAll.TabIndex = 0;
+            this.ButtonAll.Text = "All";
+            this.ButtonAll.UseVisualStyleBackColor = false;
+            this.ButtonAll.Click += new System.EventHandler(this.ButtonAll_Click);
+            // 
+            // ChatPanel
+            // 
+            this.ChatPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ChatPanel.Location = new System.Drawing.Point(0, 66);
+            this.ChatPanel.Name = "ChatPanel";
+            this.ChatPanel.Size = new System.Drawing.Size(800, 384);
+            this.ChatPanel.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(125, 40);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Iswenzz © 2019";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Chat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -297,6 +310,7 @@
         private System.Windows.Forms.Panel ChatPanel;
         private UI.Controls.Buttons.FlatButton TriggerButton;
         private UI.Controls.Buttons.FlatButton BanButton;
+        private System.Windows.Forms.Label label1;
     }
 }
 

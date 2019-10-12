@@ -55,6 +55,7 @@ namespace Iswenzz.AION.Notifier
                 { "LFG", CreateChat() },
                 { "PM", CreateChat() },
             };
+            SelectedChat = Chats["All"];
             SyncChatLog();
         }
 
@@ -117,7 +118,7 @@ namespace Iswenzz.AION.Notifier
             for (string line = FileStream.ReadLine(); line != null; line = FileStream.ReadLine())
             {
                 if (!string.IsNullOrEmpty(line))
-                    ProcessLine(line);
+                    try { ProcessLine(line); } catch (Exception ex) { Console.WriteLine(ex); }
             }
         }
 
@@ -185,6 +186,9 @@ namespace Iswenzz.AION.Notifier
             }
         }
 
+        /// <summary>
+        /// Notify user with a system sound and system tray notification.
+        /// </summary>
         private async Task NotifySoundLoop()
         {
             if (IsSoundPlaying)
@@ -321,6 +325,9 @@ namespace Iswenzz.AION.Notifier
         private void TriggerButton_Click(object sender, EventArgs e) => TriggerForm.Show();
         private void BanButton_Click(object sender, EventArgs e) => BanForm.Show();
 
+        /// <summary>
+        /// Callback on form closing, save triggers/bans etc to user settings.
+        /// </summary>
         private void Chat_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save triggers
@@ -338,6 +345,9 @@ namespace Iswenzz.AION.Notifier
             Properties.Settings.Default.Save();
         }
 
+        /// <summary>
+        /// Callback on form load, load triggers/bans etc from user settings.
+        /// </summary>
         private void Chat_Load(object sender, EventArgs e)
         {
             // Load triggers
