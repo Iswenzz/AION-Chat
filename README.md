@@ -11,3 +11,5 @@ AION Chat is an utility app to read AION Chat.log in real time.
 * Easy copy paste
 * Sound / Tray notification
 * Link parsing
+
+![](https://i.imgur.com/tyhB0rJ.png)
