@@ -30,16 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Chat));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.TriggerButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.BanButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.MuteButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.ClearButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
+            this.LogButton = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.ButtonPM = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.ButtonLFG = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.ButtonAll = new Iswenzz.UI.Controls.Buttons.FlatButton();
             this.ChatPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -52,11 +53,23 @@
             this.panel1.Controls.Add(this.BanButton);
             this.panel1.Controls.Add(this.MuteButton);
             this.panel1.Controls.Add(this.ClearButton);
+            this.panel1.Controls.Add(this.LogButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 42);
             this.panel1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(125, 40);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Iswenzz © 2019";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TriggerButton
             // 
@@ -77,7 +90,7 @@
             this.TriggerButton.Icon = null;
             this.TriggerButton.IconAutoPlacement = false;
             this.TriggerButton.IconSize = 0;
-            this.TriggerButton.Location = new System.Drawing.Point(606, 0);
+            this.TriggerButton.Location = new System.Drawing.Point(558, 0);
             this.TriggerButton.Name = "TriggerButton";
             this.TriggerButton.RoundedCorner = 0;
             this.TriggerButton.Size = new System.Drawing.Size(48, 40);
@@ -104,7 +117,7 @@
             this.BanButton.Icon = null;
             this.BanButton.IconAutoPlacement = false;
             this.BanButton.IconSize = 0;
-            this.BanButton.Location = new System.Drawing.Point(654, 0);
+            this.BanButton.Location = new System.Drawing.Point(606, 0);
             this.BanButton.Name = "BanButton";
             this.BanButton.RoundedCorner = 0;
             this.BanButton.Size = new System.Drawing.Size(48, 40);
@@ -131,7 +144,7 @@
             this.MuteButton.Icon = null;
             this.MuteButton.IconAutoPlacement = false;
             this.MuteButton.IconSize = 0;
-            this.MuteButton.Location = new System.Drawing.Point(702, 0);
+            this.MuteButton.Location = new System.Drawing.Point(654, 0);
             this.MuteButton.Name = "MuteButton";
             this.MuteButton.RoundedCorner = 0;
             this.MuteButton.Size = new System.Drawing.Size(48, 40);
@@ -158,13 +171,40 @@
             this.ClearButton.Icon = null;
             this.ClearButton.IconAutoPlacement = false;
             this.ClearButton.IconSize = 0;
-            this.ClearButton.Location = new System.Drawing.Point(750, 0);
+            this.ClearButton.Location = new System.Drawing.Point(702, 0);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.RoundedCorner = 0;
             this.ClearButton.Size = new System.Drawing.Size(48, 40);
             this.ClearButton.TabIndex = 1;
             this.ClearButton.UseVisualStyleBackColor = false;
             this.ClearButton.Click += new System.EventHandler(this.CleanButton_Click);
+            // 
+            // LogButton
+            // 
+            this.LogButton.Angles = 0;
+            this.LogButton.BackColor = System.Drawing.Color.Transparent;
+            this.LogButton.BackgroundImage = global::Iswenzz.AION.Resources.log;
+            this.LogButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.LogButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.LogButton.FlatAppearance.BorderSize = 0;
+            this.LogButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.LogButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.LogButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogButton.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.LogButton.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.LogButton.HoverColorLeave = System.Drawing.Color.Empty;
+            this.LogButton.HoverColorText = System.Drawing.Color.DarkOrange;
+            this.LogButton.HoverColorTextLeave = System.Drawing.Color.Empty;
+            this.LogButton.Icon = null;
+            this.LogButton.IconAutoPlacement = false;
+            this.LogButton.IconSize = 0;
+            this.LogButton.Location = new System.Drawing.Point(750, 0);
+            this.LogButton.Name = "LogButton";
+            this.LogButton.RoundedCorner = 0;
+            this.LogButton.Size = new System.Drawing.Size(48, 40);
+            this.LogButton.TabIndex = 5;
+            this.LogButton.UseVisualStyleBackColor = false;
+            this.LogButton.Click += new System.EventHandler(this.LogButton_Click);
             // 
             // panel2
             // 
@@ -267,17 +307,6 @@
             this.ChatPanel.Size = new System.Drawing.Size(800, 384);
             this.ChatPanel.TabIndex = 2;
             // 
-            // label1
-            // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 40);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Iswenzz © 2019";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // Chat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -311,6 +340,7 @@
         private UI.Controls.Buttons.FlatButton TriggerButton;
         private UI.Controls.Buttons.FlatButton BanButton;
         private System.Windows.Forms.Label label1;
+        private UI.Controls.Buttons.FlatButton LogButton;
     }
 }
 

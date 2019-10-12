@@ -4,3 +4,7 @@ bin/Debug/
 obj/Debug/
 
 Properties/
+
+bin/Release/
+
+obj/Release/

@@ -69,6 +69,9 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>chat.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ConsoleControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=7edd23586f5e297f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -147,7 +150,6 @@
     <EmbeddedResource Include="Trigger.resx">
       <DependentUpon>Trigger.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="AION Chat_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -163,15 +165,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\erase.png" />
     <None Include="Resources\unmuted.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\muted.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="chat.ico" />
     <Content Include="Resources\ban.png" />
     <Content Include="Resources\chat.ico" />
+    <Content Include="Resources\erase.png" />
+    <Content Include="Resources\log.png" />
     <Content Include="Resources\trigger.png" />
   </ItemGroup>
   <ItemGroup>

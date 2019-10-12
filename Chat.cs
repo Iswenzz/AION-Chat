@@ -28,9 +28,9 @@ namespace Iswenzz.AION.Notifier
         private BanForm BanForm { get; set; }
 
         public string ChatLogPath { get; set; }
-        public StreamReader FileStream { get; private set; }
+        public StreamReader Reader { get; private set; }
         public FileSystemWatcher ChatLogWatcher { get; set; }
-        private FileStream File { get; set; }
+        private FileStream FS { get; set; }
         private ConsoleControl.ConsoleControl SelectedChat { get; set; }
         private HtmlWeb Web { get; set; }
 
@@ -43,7 +43,6 @@ namespace Iswenzz.AION.Notifier
         public Chat()
         {
             InitializeComponent();
-            ChatLogPath = @"D:\Program Files (x86)\GameforgeLive\Games\FRA_fra\AION\Download\Chat.log";
             Resources = new ComponentResourceManager(typeof(Resources));
             Web = new HtmlWeb();
             TriggerForm = new TriggerForm();
@@ -56,7 +55,6 @@ namespace Iswenzz.AION.Notifier
                 { "PM", CreateChat() },
             };
             SelectedChat = Chats["All"];
-            SyncChatLog();
         }
 
         /// <summary>
@@ -96,9 +94,19 @@ namespace Iswenzz.AION.Notifier
         /// </summary>
         private void SyncChatLog()
         {
-            File = new FileStream(ChatLogPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            FileStream = new StreamReader(File, Encoding.Default);
-            FileStream.ReadToEnd();
+            FS?.Dispose();
+            Reader?.Dispose();
+            ChatLogWatcher?.Dispose();
+
+            if (!string.IsNullOrEmpty(ChatLogPath) && !File.Exists(ChatLogPath))
+            {
+                ChatLogPath = "";
+                return;
+            }
+
+            FS = new FileStream(ChatLogPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            Reader = new StreamReader(FS, Encoding.Default);
+            Reader.ReadToEnd();
 
             ChatLogWatcher = new FileSystemWatcher
             {
@@ -115,7 +123,7 @@ namespace Iswenzz.AION.Notifier
         /// </summary>
         private void ChatLog_Changed(object sender, FileSystemEventArgs e)
         {
-            for (string line = FileStream.ReadLine(); line != null; line = FileStream.ReadLine())
+            for (string line = Reader.ReadLine(); line != null; line = Reader.ReadLine())
             {
                 if (!string.IsNullOrEmpty(line))
                     try { ProcessLine(line); } catch (Exception ex) { Console.WriteLine(ex); }
@@ -311,10 +319,10 @@ namespace Iswenzz.AION.Notifier
             Chats = null;
             ChatLogWatcher?.Dispose();
             ChatLogWatcher = null;
-            FileStream?.Dispose();
-            FileStream = null;
-            File?.Dispose();
-            File = null;
+            Reader?.Dispose();
+            Reader = null;
+            FS?.Dispose();
+            FS = null;
 
             base.Dispose();
         }
@@ -324,12 +332,31 @@ namespace Iswenzz.AION.Notifier
         private void ButtonPM_Click(object sender, EventArgs e) => ToggleChat(Chats["PM"]);
         private void TriggerButton_Click(object sender, EventArgs e) => TriggerForm.Show();
         private void BanButton_Click(object sender, EventArgs e) => BanForm.Show();
+        private void LogButton_Click(object sender, EventArgs e) => ChangeLogPath();
+
+        /// <summary>
+        /// Change the Chat.log file path.
+        /// </summary>
+        public void ChangeLogPath()
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog() { Filter = "Log files (*.log)|*.log|All files (*.*)|*.*", Title = "Chat.log location.", })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    ChatLogPath = dialog.FileName;
+                    SyncChatLog();
+                }
+            }
+        }
 
         /// <summary>
         /// Callback on form closing, save triggers/bans etc to user settings.
         /// </summary>
         private void Chat_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Save chat log path
+            Properties.Settings.Default.LogPath = ChatLogPath;
+
             // Save triggers
             Properties.Settings.Default.TriggersOn = string.Join(",", TriggerForm.TriggerBox.Items
                 .Cast<ListViewItem>().Where(b => b.Checked).Select(b => b.Text));
@@ -350,6 +377,13 @@ namespace Iswenzz.AION.Notifier
         /// </summary>
         private void Chat_Load(object sender, EventArgs e)
         {
+            // Load chat log path
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.LogPath))
+            {
+                ChatLogPath = Properties.Settings.Default.LogPath;
+                SyncChatLog();
+            }
+
             // Load triggers
             if (!string.IsNullOrEmpty(Properties.Settings.Default.TriggersOn))
                 Properties.Settings.Default.TriggersOn.Split(',').ToList()
