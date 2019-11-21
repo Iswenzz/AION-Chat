@@ -1,0 +1,13 @@
+version: 1.0.0.{build}
+image: Visual Studio 2019
+configuration: Release
+platform: x64
+
+before_build:
+- cmd: >-
+    nuget restore -PackagesDirectory ../packages
+    
+    msbuild.exe
+
+build:
+  verbosity: minimal
