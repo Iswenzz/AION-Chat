@@ -5,9 +5,9 @@ platform: x64
 
 before_build:
 - cmd: >-
-    nuget restore -PackagesDirectory ../packages
+    nuget restore "AION Chat.csproj" -PackagesDirectory ../packages
     
-    msbuild.exe
+    msbuild.exe "AION Chat.csproj"
 
 build:
   verbosity: minimal
