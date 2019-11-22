@@ -1,8 +1,8 @@
 
-bin/Debug/
+bin/
 
-obj/Debug/
+obj/
 
-bin/Release/
+COVERAGE.sh
 
-obj/Release/
+opencoverCoverage.xml
