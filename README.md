@@ -4,7 +4,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/iswenzz/aion-chat/badge)](https://www.codefactor.io/repository/github/iswenzz/aion-chat)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-AION Chat is an utility app to read AION Chat.log in real time.
+The AION chat utility provides the possibility to filter chat messages in real time, and set custom triggers to listen for. When these trigger words are found in the chat, it will notify you using the built in Windows Notifications. You can filter chat in multiple channels such as Whisper (PM), Global chat (All), and Looking for Group (LFG). It works by reading AION's ``Chat.log`` file in real time, providing minimal delay to give the best experience possible. More information can be found lower in this document.
 
 ![](https://i.imgur.com/tyhB0rJ.png)
 
