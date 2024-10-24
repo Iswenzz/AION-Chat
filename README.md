@@ -5,9 +5,11 @@
 [![CodeCov](https://img.shields.io/codecov/c/github/Iswenzz/AION-Chat?label=codecov&logo=codecov)](https://codecov.io/gh/Iswenzz/AION-Chat)
 [![License](https://img.shields.io/github/license/Iswenzz/AION-Chat?color=blue&logo=gitbook&logoColor=white)](https://github.com/Iswenzz/AION-Chat/blob/master/LICENSE)
 
-The AION chat utility provides the possibility to filter chat messages in real time, and set custom triggers to listen for. When these trigger words are found in the chat, it will notify you using the built in Windows Notifications. You can filter chat in multiple channels such as Whisper (PM), Global chat (All), and Looking for Group (LFG). It works by reading AION's ``Chat.log`` file in real time, providing minimal delay to give the best experience possible. More information can be found lower in this document.
+The AION chat utility provides the possibility to filter chat messages in real time, and set custom triggers to listen for. When these trigger words are found in the chat, it will notify you using the built in Windows Notifications. You can filter chat in multiple channels such as Whisper (PM), Global chat (All), and Looking for Group (LFG). It works by reading AION's ``chat.log`` file in real time, providing minimal delay to give the best experience possible. More information can be found lower in this document.
 
-![](https://i.imgur.com/tyhB0rJ.png)
+The ``chat.log`` file can be enabled by adding ``g_chatlog = "1"`` in the ``system.cfg`` file using [AionSysEditor](https://rainy.ws/apps.php).
+
+![](https://i.imgur.com/O1u5l3N.png)
 
 ## Features ##
 
