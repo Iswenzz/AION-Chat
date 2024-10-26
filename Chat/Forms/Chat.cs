@@ -282,12 +282,14 @@ namespace AION.Chat
             // Write to the main channel
             Channels["All"].SelectionColor = color;
             Channels["All"].AppendText(line);
+            Channels["All"].ScrollToCaret();
 
             // Write to the processed channel
             if (channel != null)
             {
                 channel.SelectionColor = color;
                 channel.AppendText(line);
+                channel.ScrollToCaret();
             }
         }
 
