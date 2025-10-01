@@ -2,7 +2,6 @@
 
 [![Checks](https://img.shields.io/github/check-runs/Iswenzz/AION-Chat/master?logo=github)](https://github.com/Iswenzz/AION-Chat/actions)
 [![CodeFactor](https://img.shields.io/codefactor/grade/github/Iswenzz/AION-Chat?label=codefactor&logo=codefactor)](https://www.codefactor.io/repository/github/iswenzz/AION-Chat)
-[![CodeCov](https://img.shields.io/codecov/c/github/Iswenzz/AION-Chat?label=codecov&logo=codecov)](https://codecov.io/gh/Iswenzz/AION-Chat)
 [![License](https://img.shields.io/github/license/Iswenzz/AION-Chat?color=blue&logo=gitbook&logoColor=white)](https://github.com/Iswenzz/AION-Chat/blob/master/LICENSE)
 
 ![](https://i.imgur.com/O1u5l3N.png)
