@@ -9,7 +9,7 @@ The AION chat utility provides the possibility to filter chat messages in real t
 
 The ``chat.log`` file can be enabled by adding ``g_chatlog = "1"`` in the ``system.cfg`` file using [AionSysEditor](https://rainy.ws/apps.php).
 
-![](https://i.imgur.com/O1u5l3N.png)
+![](https://i.imgur.com/ze8LVtN.png)
 
 ## Features ##
 

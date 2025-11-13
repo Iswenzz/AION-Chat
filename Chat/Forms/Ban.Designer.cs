@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BanForm));
-            AddButton = new IzUI.WinForms.UI.Controls.Inputs.Button();
+            AddButton = new System.Windows.Forms.Button();
             panel2 = new System.Windows.Forms.Panel();
-            RemoveButton = new IzUI.WinForms.UI.Controls.Inputs.Button();
+            RemoveButton = new System.Windows.Forms.Button();
             panel3 = new System.Windows.Forms.Panel();
             TextBox = new System.Windows.Forms.TextBox();
             panel5 = new System.Windows.Forms.Panel();
@@ -50,32 +50,17 @@
             // 
             // AddButton
             // 
-            AddButton.Alpha.Enabled = true;
-            AddButton.Animations.BackgroundImageHover = null;
-            AddButton.Animations.ColorHover = System.Drawing.Color.RoyalBlue;
-            AddButton.Animations.CursorHover = System.Windows.Forms.Cursors.Hand;
-            AddButton.Animations.Enabled = true;
-            AddButton.Animations.TextColorHover = System.Drawing.Color.WhiteSmoke;
             AddButton.BackColor = System.Drawing.Color.DodgerBlue;
-            AddButton.Border.Color = System.Drawing.Color.SteelBlue;
-            AddButton.Border.Enabled = true;
-            AddButton.Border.Radius = new System.Drawing.Size(0, 0);
-            AddButton.Border.Width = 4F;
+            AddButton.FlatAppearance.BorderSize = 0;
+            AddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             AddButton.ForeColor = System.Drawing.Color.WhiteSmoke;
-            AddButton.Icon.Enabled = true;
-            AddButton.Icon.IconImage = null;
-            AddButton.Icon.IconSize = 0;
-            AddButton.Layouts.Angle = 0;
-            AddButton.Layouts.Enabled = true;
-            AddButton.Location = new System.Drawing.Point(146, 17);
-            AddButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            AddButton.Location = new System.Drawing.Point(117, 14);
+            AddButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             AddButton.Name = "AddButton";
-            AddButton.Size = new System.Drawing.Size(125, 50);
+            AddButton.Size = new System.Drawing.Size(100, 40);
             AddButton.TabIndex = 2;
             AddButton.Text = "Add";
-            AddButton.TextLayouts.Angle = 0;
-            AddButton.TextLayouts.ContentAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            AddButton.TextLayouts.Enabled = true;
+            AddButton.UseVisualStyleBackColor = false;
             AddButton.Click += AddButton_Click;
             // 
             // panel2
@@ -83,40 +68,25 @@
             panel2.Controls.Add(RemoveButton);
             panel2.Controls.Add(AddButton);
             panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            panel2.Location = new System.Drawing.Point(334, 0);
-            panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            panel2.Location = new System.Drawing.Point(267, 0);
+            panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size(284, 81);
+            panel2.Size = new System.Drawing.Size(227, 65);
             panel2.TabIndex = 3;
             // 
             // RemoveButton
             // 
-            RemoveButton.Alpha.Enabled = true;
-            RemoveButton.Animations.BackgroundImageHover = null;
-            RemoveButton.Animations.ColorHover = System.Drawing.Color.RoyalBlue;
-            RemoveButton.Animations.CursorHover = System.Windows.Forms.Cursors.Hand;
-            RemoveButton.Animations.Enabled = true;
-            RemoveButton.Animations.TextColorHover = System.Drawing.Color.WhiteSmoke;
             RemoveButton.BackColor = System.Drawing.Color.DodgerBlue;
-            RemoveButton.Border.Color = System.Drawing.Color.SteelBlue;
-            RemoveButton.Border.Enabled = true;
-            RemoveButton.Border.Radius = new System.Drawing.Size(0, 0);
-            RemoveButton.Border.Width = 4F;
+            RemoveButton.FlatAppearance.BorderSize = 0;
+            RemoveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             RemoveButton.ForeColor = System.Drawing.Color.WhiteSmoke;
-            RemoveButton.Icon.Enabled = true;
-            RemoveButton.Icon.IconImage = null;
-            RemoveButton.Icon.IconSize = 0;
-            RemoveButton.Layouts.Angle = 0;
-            RemoveButton.Layouts.Enabled = true;
-            RemoveButton.Location = new System.Drawing.Point(13, 17);
-            RemoveButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            RemoveButton.Location = new System.Drawing.Point(10, 14);
+            RemoveButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             RemoveButton.Name = "RemoveButton";
-            RemoveButton.Size = new System.Drawing.Size(125, 50);
+            RemoveButton.Size = new System.Drawing.Size(100, 40);
             RemoveButton.TabIndex = 3;
             RemoveButton.Text = "Remove";
-            RemoveButton.TextLayouts.Angle = 0;
-            RemoveButton.TextLayouts.ContentAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            RemoveButton.TextLayouts.Enabled = true;
+            RemoveButton.UseVisualStyleBackColor = false;
             RemoveButton.Click += RemoveButton_Click;
             // 
             // panel3
@@ -128,50 +98,50 @@
             panel3.Controls.Add(panel4);
             panel3.Controls.Add(panel2);
             panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panel3.Location = new System.Drawing.Point(0, 583);
-            panel3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            panel3.Location = new System.Drawing.Point(0, 466);
+            panel3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             panel3.Name = "panel3";
-            panel3.Size = new System.Drawing.Size(618, 81);
+            panel3.Size = new System.Drawing.Size(494, 65);
             panel3.TabIndex = 5;
             // 
             // TextBox
             // 
-            TextBox.BackColor = System.Drawing.Color.LightGray;
+            TextBox.BackColor = System.Drawing.Color.White;
             TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             TextBox.ForeColor = System.Drawing.Color.Black;
-            TextBox.Location = new System.Drawing.Point(16, 27);
-            TextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            TextBox.Location = new System.Drawing.Point(13, 22);
+            TextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             TextBox.Multiline = true;
             TextBox.Name = "TextBox";
-            TextBox.Size = new System.Drawing.Size(318, 29);
+            TextBox.Size = new System.Drawing.Size(254, 23);
             TextBox.TabIndex = 4;
             TextBox.KeyPress += TextBox_KeyPress;
             // 
             // panel5
             // 
             panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panel5.Location = new System.Drawing.Point(16, 56);
-            panel5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            panel5.Location = new System.Drawing.Point(13, 45);
+            panel5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             panel5.Name = "panel5";
-            panel5.Size = new System.Drawing.Size(318, 25);
+            panel5.Size = new System.Drawing.Size(254, 20);
             panel5.TabIndex = 6;
             // 
             // panel1
             // 
             panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            panel1.Location = new System.Drawing.Point(16, 0);
-            panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            panel1.Location = new System.Drawing.Point(13, 0);
+            panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(318, 27);
+            panel1.Size = new System.Drawing.Size(254, 22);
             panel1.TabIndex = 5;
             // 
             // panel4
             // 
             panel4.Dock = System.Windows.Forms.DockStyle.Left;
             panel4.Location = new System.Drawing.Point(0, 0);
-            panel4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            panel4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             panel4.Name = "panel4";
-            panel4.Size = new System.Drawing.Size(16, 81);
+            panel4.Size = new System.Drawing.Size(13, 65);
             panel4.TabIndex = 4;
             // 
             // BanBox
@@ -182,10 +152,10 @@
             BanBox.Dock = System.Windows.Forms.DockStyle.Fill;
             BanBox.ForeColor = System.Drawing.Color.Gainsboro;
             BanBox.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            BanBox.Location = new System.Drawing.Point(16, 16);
-            BanBox.Margin = new System.Windows.Forms.Padding(100);
+            BanBox.Location = new System.Drawing.Point(13, 13);
+            BanBox.Margin = new System.Windows.Forms.Padding(80);
             BanBox.Name = "BanBox";
-            BanBox.Size = new System.Drawing.Size(586, 551);
+            BanBox.Size = new System.Drawing.Size(468, 440);
             BanBox.TabIndex = 8;
             BanBox.UseCompatibleStateImageBehavior = false;
             BanBox.View = System.Windows.Forms.View.List;
@@ -200,53 +170,58 @@
             panel6.Controls.Add(panel7);
             panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             panel6.Location = new System.Drawing.Point(0, 0);
+            panel6.Margin = new System.Windows.Forms.Padding(2);
             panel6.Name = "panel6";
-            panel6.Size = new System.Drawing.Size(618, 583);
+            panel6.Size = new System.Drawing.Size(494, 466);
             panel6.TabIndex = 6;
             // 
             // panel10
             // 
             panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panel10.Location = new System.Drawing.Point(16, 567);
+            panel10.Location = new System.Drawing.Point(13, 453);
+            panel10.Margin = new System.Windows.Forms.Padding(2);
             panel10.Name = "panel10";
-            panel10.Size = new System.Drawing.Size(586, 16);
+            panel10.Size = new System.Drawing.Size(468, 13);
             panel10.TabIndex = 3;
             // 
             // panel9
             // 
             panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            panel9.Location = new System.Drawing.Point(16, 0);
+            panel9.Location = new System.Drawing.Point(13, 0);
+            panel9.Margin = new System.Windows.Forms.Padding(2);
             panel9.Name = "panel9";
-            panel9.Size = new System.Drawing.Size(586, 16);
+            panel9.Size = new System.Drawing.Size(468, 13);
             panel9.TabIndex = 2;
             // 
             // panel8
             // 
             panel8.Dock = System.Windows.Forms.DockStyle.Right;
-            panel8.Location = new System.Drawing.Point(602, 0);
+            panel8.Location = new System.Drawing.Point(481, 0);
+            panel8.Margin = new System.Windows.Forms.Padding(2);
             panel8.Name = "panel8";
-            panel8.Size = new System.Drawing.Size(16, 583);
+            panel8.Size = new System.Drawing.Size(13, 466);
             panel8.TabIndex = 1;
             // 
             // panel7
             // 
             panel7.Dock = System.Windows.Forms.DockStyle.Left;
             panel7.Location = new System.Drawing.Point(0, 0);
+            panel7.Margin = new System.Windows.Forms.Padding(2);
             panel7.Name = "panel7";
-            panel7.Size = new System.Drawing.Size(16, 583);
+            panel7.Size = new System.Drawing.Size(13, 466);
             panel7.TabIndex = 0;
             // 
             // BanForm
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(20, 20, 20);
-            ClientSize = new System.Drawing.Size(618, 664);
+            ClientSize = new System.Drawing.Size(494, 531);
             Controls.Add(panel6);
             Controls.Add(panel3);
             ForeColor = System.Drawing.Color.Gainsboro;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
-            Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             Name = "BanForm";
             Text = "Ban Messages";
             FormClosing += BanForm_FormClosing;
@@ -258,9 +233,9 @@
         }
 
         #endregion
-        private IzUI.WinForms.UI.Controls.Inputs.Button AddButton;
+        private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Panel panel2;
-        private IzUI.WinForms.UI.Controls.Inputs.Button RemoveButton;
+        private System.Windows.Forms.Button RemoveButton;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TextBox TextBox;
         private System.Windows.Forms.Panel panel4;
